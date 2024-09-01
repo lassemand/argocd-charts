@@ -2,13 +2,11 @@ apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   name: argocd-image-uploader
-  namespace: argocd
 spec:
   template:
     metadata:
       name: 'default-image-uploader'
     spec:
-      project: 'default'
       sources:
       - repoURL: https://github.com/lassemand/argocd-charts
         targetRevision: HEAD
