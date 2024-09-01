@@ -12,13 +12,14 @@ spec:
     metadata:
       name: 'default-image-uploader'
     spec:
-      sources:
-      - repoURL: https://github.com/lassemand/argocd-charts
+      project: '{{project}}'  # The project field is required
+      source:
+        repoURL: https://github.com/lassemand/argocd-charts
         targetRevision: HEAD
         path: "default/image-uploader"
         helm:
           valueFiles:
             - default/image-uploader/values.yaml
       destination:
-        server: https://kubernetes.default.svc
+        server: '{{clusterName}}'
         namespace: default
