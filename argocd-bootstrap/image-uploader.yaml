@@ -3,6 +3,11 @@ kind: ApplicationSet
 metadata:
   name: argocd-image-uploader
 spec:
+  generators:
+  - list:
+      elements:
+      - project: default
+        clusterName: https://kubernetes.default.svc
   template:
     metadata:
       name: 'default-image-uploader'
@@ -15,4 +20,5 @@ spec:
           valueFiles:
             - default/image-uploader/values.yaml
       destination:
+        server: https://kubernetes.default.svc
         namespace: default
