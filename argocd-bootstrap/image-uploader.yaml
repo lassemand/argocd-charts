@@ -10,9 +10,9 @@ spec:
         clusterName: https://kubernetes.default.svc
   template:
     metadata:
-      name: 'default-image-uploader'
+      name: '{{clusterName}}-image-uploader'
     spec:
-      project: '{{project}}'  # The project field is required
+      project: '{{project}}'  # Dynamically assign the project value from the list generator
       source:
         repoURL: https://github.com/lassemand/argocd-charts
         targetRevision: HEAD
@@ -23,3 +23,7 @@ spec:
       destination:
         server: '{{clusterName}}'
         namespace: default
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
