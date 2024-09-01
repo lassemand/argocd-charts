@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: sealed-secrets
+  namespace: argocd
+spec:
+  template:
+    metadata:
+      name: '{{project}}-sealed-secrets'
+      annotations:
+        notifications.argoproj.io/subscribe.slack: 'argocd-{{project}}'
+    spec:
+      project: '{{project}}'
+      sources:
+      - repoURL: https://github.com/lassemand/argocd-charts
+        targetRevision: HEAD
+        path: "path/to/your/chart"
+        helm:
+          valueFiles:
+            - path/to/your/chart/values.yaml
+      destination:
+        name: '{{clusterName}}'
+        namespace: kube-system
