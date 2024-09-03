@@ -7,5 +7,5 @@ spec:
     spec:
       containers:
       - name: hello-world-container
-        image: lmapwns/argocd-image-uploader-test:{{ .Values.imageTag }}
+        image: lmapwns/argocd-image-uploader-test:0.0.x
       restartPolicy: Never
