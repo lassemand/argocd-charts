@@ -12,14 +12,14 @@ spec:
     metadata:
       name: '{{clusterName}}-image-uploader'
     spec:
-      project: '{{project}}'  # Dynamically assign the project value from the list generator
-      source:
-        repoURL: https://github.com/lassemand/argocd-charts
-        targetRevision: HEAD
-        path: "default/image-uploader"
-        helm:
-          valueFiles:
-            - default/image-uploader/values.yaml
+      project: '{{project}}'
+      sources:
+        - repoURL: https://github.com/lassemand/argocd-charts
+          targetRevision: HEAD
+          path: 'default/image-uploader'
+          helm:
+            valueFiles:
+              - 'default/image-uploader/values.yaml'
       destination:
         server: '{{clusterName}}'
         namespace: default
