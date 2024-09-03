@@ -7,8 +7,5 @@ spec:
     spec:
       containers:
       - name: hello-world-container
-        image:
-          repository: lmapwns/argocd-image-uploader-test
-          pullPolicy: IfNotPresent
-          tag: 0.0.1
+        image: lmapwns/argocd-image-uploader-test:0.0.1
       restartPolicy: Never
