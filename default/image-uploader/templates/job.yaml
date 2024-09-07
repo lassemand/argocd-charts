@@ -6,6 +6,6 @@ spec:
   template:
     spec:
       containers:
-      - name: hello-world-container
-        image: lmapwns/argocd-image-uploader-test:{{ .Values.image.tag }}
+        - image: lmapwns/argocd-image-uploader-test:{{ .Values.imageTag }}
+          name: test
       restartPolicy: Never
