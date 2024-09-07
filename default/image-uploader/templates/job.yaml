@@ -6,6 +6,6 @@ spec:
   template:
     spec:
       containers:
-        - image: lmapwns/argocd-image-uploader-test:0.0.1
-          name: test
+      - name: hello-world-container
+        image: lmapwns/argocd-image-uploader-test:0.0.1
       restartPolicy: Never
