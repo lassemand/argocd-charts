@@ -7,7 +7,7 @@ spec:
   - list:
       elements:
       - project: mgmt
-        clusterName: 'in-cluster'
+        clusterName: 'https://kubernetes.default.svc'
   template:
     metadata:
       name: '{{clusterName}}-image-uploader'
@@ -24,7 +24,7 @@ spec:
             valueFiles:
               - '{{project}}/image-uploader/values.yaml'
       destination:
-        server: '{{clusterName}}'
+        server: https://kubernetes.default.svc
         namespace: default
       syncPolicy:
         automated:
