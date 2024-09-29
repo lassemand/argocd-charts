@@ -29,6 +29,8 @@ argocd-apps:
     destinations:
     - namespace: '*'
       name: 'in-cluster'
+    - namespace: 'default'
+      name: 'in-cluster'
     clusterResourceWhitelist:
     - group: '*'
       kind: '*'
