@@ -6,23 +6,23 @@ spec:
   generators:
   - list:
       elements:
-      - project: default
-        clusterName: https://kubernetes.default.svc
+      - project: mgmt
+        clusterName: in-cluster
   template:
     metadata:
       name: '{{clusterName}}-image-uploader'
     spec:
       project: '{{project}}'
       sources:
-        - repoURL: https://github.com/lassemand/argocd-charts
+        - repoURL: git@github.com:lassemand/argocd-charts.git
           targetRevision: HEAD
-          path: 'default/image-uploader'
+          path: '{{project}}/image-uploader'
           helm:
             valueFiles:
-              - 'default/image-uploader/values.yaml'
+              - '{{project}}/image-uploader/values.yaml'
       destination:
         server: '{{clusterName}}'
-        namespace: default
+        namespace: argocd
       syncPolicy:
         automated:
           prune: true

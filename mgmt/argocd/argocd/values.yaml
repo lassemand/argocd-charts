@@ -1,0 +1,64 @@
+argo-cd:
+  controller:
+    replicas: 1
+
+  server:
+    replicas: 1
+
+  repoServer:
+    replicas: 1
+
+  applicationSet:
+    replicas: 1
+
+  configs:
+    repositories:
+      github-charts:
+        url: git@github.com:lassemand/argocd-charts.git
+
+argocd-apps:
+  projects:
+  - name: mgmt
+    permitOnlyProjectScopedClusters: false
+    finalizers:
+    - resources-finalizer.argocd.argoproj.io
+    description: Mgmt cluster
+    sourceRepos:
+    - git@github.com:lassemand/argocd-charts.git
+    - https://bitnami-labs.github.io/sealed-secrets
+    destinations:
+    - namespace: '*'
+      name: 'in-cluster'
+    clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  applications:
+  - name: argocd-bootstrap
+    namespace: argocd
+    finalizers:
+    - resources-finalizer.argocd.argoproj.io
+    project: mgmt
+    source:
+      repoURL: git@github.com:lassemand/argocd-charts.git
+      targetRevision: HEAD
+      path: argocd-bootstrap
+    destination:
+      name: 'in-cluster'
+      namespace: argocd
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true
+      syncOptions:
+      - CreateNamespace=true
+    revisionHistoryLimit: null
+
+sealed-secrets-template:
+  sealedSecrets:
+  - name: argocd-repo-creds-github-argocd-charts
+    labels:
+      app.kubernetes.io/part-of: argocd
+      argocd.argoproj.io/secret-type: repo-creds # This will make argocd see the secret as a credentialTemplate
+    secrets:
+      url: AgBW6gbu6DydGM8rnlCN3CtQFXmOLU7E4sbSwdVwcKfie1uN0w92QJwhrE1rlEGvdgPd8yAGaEB3S6ANZq4f70N+z+xNngwP5eelJsvDSBL/JND1yWv8JW2KhXVus0fpVcjGTAZClEqhK8ylDUj93YwhjHA4CeVBAUIiwaxRjXxxoSVjmXi3Cq1irvFTJgg1X4Cl5SYSPg/2aK3KdcFJiyLE8rzKxtSo/3cGcgMLoS+FGgSWmVGmYq4skEklVVRN7Yj4Gq7H1RZvvKtPFoAx475QbhXziRBL9YtKTBqG/hWQVvAyv4lVTsaOA8ZUO2Z1TmyjbCWisU1S1eeoJ41xZdcDhaFi29HlR51I7op/nGlq2+b+LtKEgyUmYCTvTvtV5g4MpQEReehNF3RV0+o9IwY5CS6szgSdlY+xi9Ag820aFm9zSNEthHGFAq/fAT76VYtyNEEV6x++TPHk6UhBva6vR44Aj77Je2N29hl5Ur1RB6pDJLULItbOt1swYALLOkEhQc6R8gYkVbKCF4jGIONveuoTFewf/S9Go4KNgoD0KulQZ1LM3ef3qtLR8G6SmSSXE4bpxsKjze8fE0KE4ca7netru0h3sARvcdWoJcQGHEzBK27zQzNKLuWUxnjys1n72oDAWIfnj377QEFJw+xpHXdeClm3OgmQxOvgjkOU4Uoljh7YjqNMmeR/6/zHdIaAT2vK2Fxg7ohi7RlMa5Jy2mo6WiSqs1Kq2WhIPeExTk5x87ju6/BHTh/L
+      sshPrivateKey: AgA1s1v14HdrXxbNoZtk7rbygo3iSwpggFolRyb3lpLUWaxfscpkjSB94suiUvMcHe6p86adsNtFL/ixdeHaWdtbo+odZ6EBnFOOp+ii3jtBI+OmXPE/8TmfrYpcYa6Qaa1pc36bIfybmlPITb8MEmlOFlsmnzMHGA6HwOPMCwmjmysMAFm7EsU1fYeveTiGMeybgxBuyNAnXa6UgNdBeWb3E17E2310r55scYf2C+14flYT39SzucWj84dCS0K5vJAmphnAbAYmx3DnMVyf/N84rSP+1l0Y1gXLsVynP33IarZuN9l3VO8S0LZSLH+6tZDYgLbgDhnG/ifJyz/cwaP7dwLsIQM7SpjUtiNNrqmDn2+bF91D80vQE5ETSBZ0JTCQWAY6TZW8AngR7EehjLKQ1RR1CT5wmjrTGvkckFZs27hr9vItEVxFylxMJ5eU0jFD2tyGL4leG+oVgZkbbDy56ZPhN1Utfon7DClCKK4aRDpHqpDOfoROWXTVlA3Zu3rrXUQBiUNrPBlb3NxeS/EDR5LScRF9df7bbzkcOq4grGTUCztX2Mmr1n5EEVztrdr4lYeaFajR7XCIdxzt9RjWn23dytZILuqe9A7H7LKz4JPyHvEMUacqzOv+DnYun7U+30UYBGFg4joC4M1ObPSatGjkQoryqIvonwpeBLR/4iLpuJpMxg7YMQ62F9T5xLE63aahiIon68VPluU6i1nH9uy17Tm61O/2iFPYjhPaqeZQDCyT6ddJD7545s8oSb8hpZbtO+Ps4AC1u6OXwNecXm7X8lGD85CXO3p9swT2d2FrpjUDJ/kLYgTjTbWbj4QHG4Fg2GjIVprMtYTd5IzdZqC3TtECWOw8w/HyxH1f75L/BDs3f8jpzN9r1FSbppWt//4ohf0IFPv0wfyCVROKaV8g7B87n4k6pQhGL4w/B2zLQKcTOMeX02/y8yHyTk9e3kUX7uimKM+Iq4KWZvS1A66xg4oj4plro21+kDGvuNpgx6i9RqSG5i55ewLiFeEcZI6hez2YMseHWM1+K2WGnV9cVOFyiTI9dgvUU+y46im356rPujgnN9l/r4Iv/7JJYVmJogMgjzf6iJEDoNTHqtG+/bk1B9eEtHzhIN1Mwoupx/YjE1jdcUlXNVpg/1KXUhg/OOQIjkrExwcZNP3iZKguG5dyevQQUIymMAz+AVoSuvEaY9QzXTfwrz90tSjzRgyrgdzLN2Hvnnr0oVX/0RqhskfM/oGU/vM=

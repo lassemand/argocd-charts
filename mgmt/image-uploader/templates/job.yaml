@@ -5,5 +5,5 @@ metadata:
 spec:
   containers:
   - name: hello-world-container
-    image: lmapwns/argocd-image-uploader-test:{{ .Values.image.tag }}
+    image: lmapwns/argocd-image-uploader-test:0.0.2
   restartPolicy: Never
