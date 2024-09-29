@@ -24,7 +24,7 @@ spec:
             valueFiles:
               - '{{project}}/image-uploader/values.yaml'
       destination:
-        server: '{{clusterName}}'
+        server: https://kubernetes.default.svc
         namespace: default
       syncPolicy:
         automated:
