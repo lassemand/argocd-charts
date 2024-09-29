@@ -22,7 +22,7 @@ spec:
           path: '{{project}}/image-uploader'
           helm:
             valueFiles:
-              - '{{project}}/image-uploader/values.yaml'
+              - 'values.yaml'
       destination:
         server: https://kubernetes.default.svc
         namespace: default
