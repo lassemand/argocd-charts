@@ -7,7 +7,7 @@ spec:
   - list:
       elements:
       - project: mgmt
-        clusterName: in-cluster
+        clusterName: 'in-cluster'
   template:
     metadata:
       name: '{{clusterName}}-image-uploader'
@@ -25,7 +25,7 @@ spec:
               - '{{project}}/image-uploader/values.yaml'
       destination:
         server: '{{clusterName}}'
-        namespace: argocd
+        namespace: default
       syncPolicy:
         automated:
           prune: true
