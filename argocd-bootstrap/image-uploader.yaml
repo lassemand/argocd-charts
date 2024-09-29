@@ -7,7 +7,7 @@ spec:
   - list:
       elements:
       - project: mgmt
-        clusterName: 'https://kubernetes.default.svc'
+        clusterName: 'in-cluster'
   template:
     metadata:
       name: '{{clusterName}}-image-uploader'
