@@ -11,6 +11,9 @@ spec:
   template:
     metadata:
       name: '{{clusterName}}-image-uploader'
+      annotations:
+        argocd-image-updater.argoproj.io/image-list: 'lmapwns/argocd-image-uploader-test:0.0.x'
+        argocd-image-updater.argoproj.io/write-back-method: git
     spec:
       project: '{{project}}'
       sources:
