@@ -8,8 +8,5 @@ dependencies:
 - name: argocd-image-updater
   repository: https://argoproj.github.io/argo-helm
   version: 0.11.0
-- name: sealed-secrets-template
-  repository: file://../../deployment-charts/sealed-secrets-template
-  version: 0.1.0
-digest: sha256:e0c892ae39667f04318b12052f3c36b54f8f962ad79a7ef1ae7f1fb5c46cada7
-generated: "2025-04-06T20:22:08.467826+02:00"
+digest: sha256:6dd93d68870ae2050a6f631158d532cca8e5c9646246c0ed91e24a848d97692d
+generated: "2025-04-06T21:10:01.695076+02:00"
