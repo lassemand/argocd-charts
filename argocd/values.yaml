@@ -4,7 +4,7 @@ argocd-apps:
     namespace: argocd
     finalizers:
     - resources-finalizer.argocd.argoproj.io
-    project: mgmt
+    project: default
     source:
       repoURL: https://github.com/lassemand/argocd-charts
       targetRevision: HEAD
