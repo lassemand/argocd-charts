@@ -1,0 +1,21 @@
+argocd-apps:
+  applications:
+  - name: argocd-bootstrap
+    namespace: argocd
+    finalizers:
+    - resources-finalizer.argocd.argoproj.io
+    project: mgmt
+    source:
+      repoURL: https://github.com/lassemand/argocd-charts
+      targetRevision: HEAD
+      path: argocd-bootstrap
+    destination:
+      name: 'in-cluster'
+      namespace: argocd
+    syncPolicy:
+      automated:
+        prune: false
+        selfHeal: true
+      syncOptions:
+      - CreateNamespace=true
+    revisionHistoryLimit: 50
