@@ -5,4 +5,4 @@ FROM alpine:latest
 WORKDIR /app
 
 # Command to run the script
-CMD ["echo", "Hello, World 5!"]
+CMD ["echo", "Hello, World 6!"]

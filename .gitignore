@@ -1,1 +1,3 @@
-.ide
+**.tgz
+.idea
+.DS_Store
